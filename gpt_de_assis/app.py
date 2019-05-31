@@ -1,5 +1,7 @@
 from flask import Flask
 from flask import request
+from flask_cors import CORS
+
 import json
 import os
 import tensorflow as tf
@@ -7,12 +9,13 @@ import tensorflow as tf
 from src import model, sample, encoder
 
 app = Flask(__name__)
+CORS(app)
 
 
 def before_first_request():
     global enc, context, output, graph, saver, ckpt
     model_name = 'gpt_de_assis'
-    temperature = 0.5
+    temperature = 0.3
     top_k = 40
     length = 40
 
@@ -50,6 +53,6 @@ def gpt_de_assis():
         return text
 
 
-@app.route("/hai")
-def hai():
-    return "Haaai!s"
+@app.route("/ping")
+def ping():
+    return "pong"
